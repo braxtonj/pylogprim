@@ -44,7 +44,7 @@ _jlf.setDeepcopy(False) # Set deepcopy to False
 
 logger.debug(_jlf.logObj(well = 'hello'))
 ```
-The prior code will output a log to logger.info of the form (JSON)
+The prior code will output a log to `logger.info` of the form (JSON)
 ```JSON
 {
       "message": "This is just a test"
@@ -56,7 +56,7 @@ The prior code will output a log to logger.info of the form (JSON)
     }
 }
 ```
-and a log to logger.debug of the form (JSON)
+and a log to `logger.debug` of the form (JSON)
 ```JSON
 {
       "well": "hello"
@@ -74,11 +74,11 @@ and a log to logger.debug of the form (JSON)
 
 #### `LogPrimFactory( base_form={}, default_val=None, deepcopy=False )`
 
-Creates the log factory with a log of form `base_form` with default values, `default_Val` to be used when encountering `*args`, and whether or not to `deepcopy` it all (useful for odd cases)
+Creates the log factory with a log of form `base_form` with default values, `default_val` to be used when encountering `*args`, and whether or not to `deepcopy` it all (useful for odd cases)
 
 * Parameters:
-  * `base_form`: dict - Defines the form of the log to be generated (with values by default)
-  * `default_val`: val - Default when *args are used (which then define the "key")
+  * `base_form`: dict - Defines the form of the log to be generated (with given values by default)
+  * `default_val`: val - Default when `*args` are used (which then define the "key")
   * `deepcopy`: bool - Whether or not to use deepcopy all the time
 * Returns:
   * `LogPrimFactory`: object - generate log objects with .logObj()
@@ -95,7 +95,7 @@ Creates the log object.  `**kwargs` are here to define additionals.  IE `logObj(
 
 #### `LogPrimFactory.setDefaultVal( defaul_val=None )`
 
-Set the default value to be used when *args is encountered
+Set the default value to be used when `*args` is encountered
 
 * Parameters:
   * `default_val`: you choose
@@ -104,16 +104,16 @@ Set the default value to be used when *args is encountered
 
 #### `LogPrimFactory.setDeepcopy( deppcopy=False )`
 
-Switch deepcopy on or off.  Sometimes dictionaries and references can get weird in python.  This let's you avoid that if you run in to it.  Generally you can leave it at.
+Switch deepcopy on or off.  Sometimes dictionaries and references can get weird in python.  This let's you avoid that if you run in to it.  Generally you can gow with the default (`False`).
 
 * Parameters:
-  * `deepcopy`: bool - True: do the deepcopy
+  * `deepcopy`: bool - `True`: do the deepcopy
 * Returns
   * nada
 
 #### `LogPrimFactory.setBaseForm( *args, **kwargs )`
 
-Set the base form for this log factory.  Can sometimes be useful.
+Set the base form for this log factory.
 
 * Parameters:
   * `*args`: strings, parameters not given in the KEY=VALUE style should be given as strings.  These will be the key names used in `base_form` with `default_value` assigned.
@@ -137,7 +137,7 @@ Add to the base form for this log factory.
 
 #### `LogPrimFactory.removeBase( *args, **kwargs )`
 
-Remove from the base form for this log factory.  Can sometimes be useful.
+Remove from the base form for this log factory.
 
 * Parameters:
   * `*args`: strings, parameters not given in the KEY=VALUE style should be given as strings.  These will be the key names removed from `base_form`.
