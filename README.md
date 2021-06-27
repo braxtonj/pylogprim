@@ -1,16 +1,5 @@
 # [Python Log Primitive Factory](https://github.com/braxtonj/pylogprim)
 
-##### Table of Contents
-* [Overview](#overview)
-* [Dependencies: None](#dependencies-none)
-* [Example Usage](#example-usage)
-* [API](#api)
-  + [`LogPrimFactory`](#logprimfactory)
-  + [`JSONLogPrimFactory`](#jsonlogprimfactory)
-* [License](#license)
-* [Contribution](#contribution)
-
-
 ## Overview
 
 ***WIP***
@@ -20,6 +9,25 @@ Simple way to create log object primitives with set default values using a facto
 Useful when you are trying to standardize your structured logs across a Python project.  Save a common `base_form` for reuse, don't set a default `base_form` OR just extend the `LogPrimFactory` (the base) class to be what you want :)
 
 Then just create a new log object, telling the factory what additional information you'd like to include.
+
+i.e. with default data `'id': 42`
+```python
+logPrimFactory.logObj(log = 'it')
+```
+outputs
+```python
+{ 'id': 42, 'log': 'it' }
+```
+
+##### Table of Contents
+* [Overview](#overview)
+* [Dependencies: None](#dependencies-none)
+* [Example Usage](#example-usage)
+* [API](#api)
+  + [`LogPrimFactory`](#logprimfactory)
+  + [`JSONLogPrimFactory`](#jsonlogprimfactory)
+* [License](#license)
+* [Contribution](#contribution)
 
 ## Dependencies: None
 
