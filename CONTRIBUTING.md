@@ -10,6 +10,10 @@ We follow the standard "Fork and pull" model.  Read more about it [here](https:/
 
 Use this repo's GitHub Issues liberally to document bugs, feature requests, tasks (even if it's a cry for community help :), etc
 
+## Dev
+
+It's a simple code base, but setting the environment variable PYLOGPRRIM_DEV to just exist will output dev logs to the Python logger/stdout.  Also setting the environment key LOGDNA_API_KEY will route dev logs to your LogDNA account as well.
+
 ## Testing
 
 The testing framework is rudimentary at best as of right now. Please ensure to cover contributions through the use of unit tests in src/tests/test.py
