@@ -61,7 +61,9 @@ class LogPrimFactory:
             _lf.logObj(keyword1={'log':'it'},message="Just some message to display")
         <==_OUT
             {
-                  'log': 'it'
+                  'keyword1': {
+                      'log': 'it'
+                  }
                 , 'message': 'Just some message to display'
                 , ...default values for base_form where "log" and "message" are overwritten by logObj if present
             }
