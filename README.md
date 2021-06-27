@@ -6,7 +6,7 @@ WIP
 
 Simple way to create log object primitives with set default values.
 
-Useful when you are trying to standardize your structured logs in across a Python project.  Save common base_forms for reuse OR just extend the LogPrimFactory (the base) class to be what you want :)
+Useful when you are trying to standardize your structured logs across a Python project.  Save common a base_form for reuse, don't set a default base_form OR just extend the LogPrimFactory (the base) class to be what you want :)
 
 ## Dependencies:
 * None
@@ -16,7 +16,7 @@ Useful when you are trying to standardize your structured logs in across a Pytho
 
 ## Example Usage
 1. Copy the repo to your project using the folder pylogprim
-2. Copy the following code above this folder and run
+2. Copy the following code above pylogprim folder and run
 ```python
 # This shows JSON output to logger.
 #    Use LogPrimFactory to get a dictionary instead.
