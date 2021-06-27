@@ -14,6 +14,9 @@ Use this repo's GitHub Issues liberally to document bugs, feature requests, task
 
 It's a simple code base, but setting the environment variable `PYLOGPRIM_DEV` to just exist will output dev logs to the Python logger/stdout.  Also setting the environment variable `LOGDNA_API_KEY` will additionally route dev logs to your LogDNA account.
 
+### Dev Dependencies (set environment variable DEV to just exist):
+* `logdna` (if environment variables `PYLOGPRIM_DEV` and `LOGDNA_API_KEY` are set)
+
 ## Testing
 
 The testing framework is rudimentary at best as of right now. Please ensure to cover contributions through the use of unit tests in src/tests/test.py
