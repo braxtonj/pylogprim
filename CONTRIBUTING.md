@@ -12,7 +12,7 @@ Use this repo's GitHub Issues liberally to document bugs, feature requests, task
 
 ## Dev
 
-It's a simple code base, but setting the environment variable PYLOGPRRIM_DEV to just exist will output dev logs to the Python logger/stdout.  Also setting the environment key LOGDNA_API_KEY will route dev logs to your LogDNA account as well.
+It's a simple code base, but setting the environment variable PYLOGPRRIM_DEV to just exist will output dev logs to the Python logger/stdout.  Also setting the environment key LOGDNA_API_KEY will additionally route dev logs to your LogDNA account.
 
 ## Testing
 
