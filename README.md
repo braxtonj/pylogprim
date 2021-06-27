@@ -66,7 +66,7 @@ and another to `logger.debug` of the form
 
 ## API
 
-### `LogPrimFactory`
+### [`LogPrimFactory`](./LogPrimFactory.py)
 
 #### `LogPrimFactory( base_form={}, default_val=None, deepcopy=False )`
 
@@ -143,7 +143,7 @@ Remove from the base form for this log factory.
 * Returns
   * nada
 
-### `JSONLogPrimFactory`
+### [`JSONLogPrimFactory`](./JSONLogPrimFactory.py)
 
 Inherits from `LogPrimFactory` but returns stringified JSON for `logObj`
 
