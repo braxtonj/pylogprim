@@ -153,4 +153,4 @@ Inherits from LogPrimFactory but returns stringified JSON for logObj
 These Factories are MIT Licensed.  See [license](./LICENSE)
 
 ## Contribution
-Contributions are welcome.  See the [contribution doc](./CONTRIBUTIONS.md)
+Contributions are welcome.  See the [contribution doc](./CONTRIBUTING.md)
