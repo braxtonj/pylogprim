@@ -1,5 +1,5 @@
 """
-Set up developer logging using the environment variable PYLOGPRIM_DEV.  May be overkill for such a small code base but why the hell not.
+Set up developer logging using the environment variable PYLOGPRIM_DEV.  May be overkill for such a small code base but why not.
 """
 import os
 import sys
