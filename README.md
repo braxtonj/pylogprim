@@ -42,23 +42,23 @@ from pylogprim.Factories import JSONLogPrimFactory as JLF
 
 logger = logging.getLogger('pylogprim_test')
 
-_jlf = JLF(
+jlf = JLF(
       base_form = {'field1':100,'key2':{'well':'just','log':'it'}}
     , default_val = 42
     , deepcopy = True
 )
 
 logger.info(
-    _jlf.logObj(
+    jlf.logObj(
           message = 'This is just a test'
         , why_not_add_more = 'it will get added to this created log only'
         , field1 = -13 # Overwrite default values for this log only
     )
 )
 
-_jlf.setDeepcopy(False) # Set deepcopy to False
+jlf.setDeepcopy(False) # Set deepcopy to False
 
-logger.debug(_jlf.logObj(well = 'hello'))
+logger.debug(jlf.logObj(well = 'hello'))
 ```
 The prior code will output a stringified JSON log to `logger.info` of the form
 ```JSON
