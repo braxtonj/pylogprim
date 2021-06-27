@@ -74,7 +74,7 @@ and a log to logger.debug of the form (JSON)
 
 #### `LogPrimFactory( base_form={}, default_val=None, deepcopy=False )`
 
-Creates the log factory with a log of form base_form with default values (for *args) and whether or not to deepcopy it all (useful for odd cases)
+Creates the log factory with a log of form `base_form` with default values, `default_Val` to be used when encountering `*args`, and whether or not to `deepcopy` it all (useful for odd cases)
 
 * Parameters:
   * `base_form`: dict - Defines the form of the log to be generated (with values by default)
