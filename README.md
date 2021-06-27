@@ -19,6 +19,8 @@ Simple way to create log object primitives with set default values using a facto
 
 Useful when you are trying to standardize your structured logs across a Python project.  Save a common `base_form` for reuse, don't set a default `base_form` OR just extend the `LogPrimFactory` (the base) class to be what you want :)
 
+Then just create a new log object, telling the factory what additional information you'd like to include.
+
 ## Dependencies: None
 
 ## Example Usage
@@ -124,9 +126,9 @@ Set the base form for this log factory.
 
 * Parameters:
   * `*args`: strings, parameters not given in the KEY=VALUE style should be given as strings.  These will be the key names used in `base_form` with `default_value` assigned.
-    * ex - `.setBaseForm('key1','key2')` --> `base_form.update({'key1': DEFAULT_VAL, 'key2': DEFAULT_VAL})`
+    * ex - `.setBaseForm('key1','key2')` ~~> `base_form = {'key1': DEFAULT_VAL, 'key2': DEFAULT_VAL}`
   * `**kwargs`: keyword arguments - key-values to be added to the `base_form`
-    * ex - `.setBaseForm(key1=42, key2=10)` --> `base_form.update({'key1':42, 'key2':10})`
+    * ex - `.setBaseForm(key1=42, key2=10)` ~~> `base_form = {'key1':42, 'key2':10}`
 * Returns
   * nada
 
@@ -136,9 +138,9 @@ Add to the base form for this log factory.
 
 * Parameters:
   * `*args`: strings, parameters not given in the KEY=VALUE style should be given as strings.  These will be the key names used in `base_form` with `default_value` assigned.
-    * ex - `.addBase('key1','key2')` --> `base_form.update({'key1': DEFAULT_VAL, 'key2': DEFAULT_VAL})`
+    * ex - `.addBase('key1','key2')` ~~> `base_form.update({'key1': DEFAULT_VAL, 'key2': DEFAULT_VAL})`
   * `**kwargs`: keyword arguments - key-values to be added to the `base_form`
-    * ex - `.addBase(key1=42, key2=10)` --> `base_form.update({'key1':42, 'key2':10})`
+    * ex - `.addBase(key1=42, key2=10)` ~~> `base_form.update({'key1':42, 'key2':10})`
 * Returns
   * nada
 
@@ -148,9 +150,9 @@ Remove from the base form for this log factory.
 
 * Parameters:
   * `*args`: strings, parameters not given in the KEY=VALUE style should be given as strings.  These will be the key names removed from `base_form`.
-    * ex - `.removeBase('key1','key2')` --> `base_form.pop('key1'); base_form.pop('key2')`
+    * ex - `.removeBase('key1','key2')` ~~> `base_form.pop('key1'); base_form.pop('key2')`
   * `**kwargs`: keyword arguments - key-values to be removed from the `base_form` (VAL is really unnecessary and isn't used in the logic)
-    * ex - `.removeBase(key1=42, key2=10)` --> `base_form.pop('key1'); base_form.pop('key2')`
+    * ex - `.removeBase(key1=42, key2=10)` ~~> `base_form.pop('key1'); base_form.pop('key2')`
 * Returns
   * nada
 
