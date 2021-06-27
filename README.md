@@ -70,7 +70,7 @@ and a log to logger.debug of the form (JSON)
 
 ## API
 
-### LogPrimFactory
+### `LogPrimFactory`
 
 #### `LogPrimFactory( base_form={}, default_val=None, deepcopy=False )`
 
