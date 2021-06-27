@@ -2,11 +2,11 @@
 
 ##### Table of Contents
 * [Overview](#overview)
-* [Dependencies: None](#dependencies--none)
+* [Dependencies: None](#dependencies-none)
 * [Example Usage](#example-usage)
 * [API](#api)
-  + [`LogPrimFactory`](#--logprimfactory----logprimfactorypy-)
-  + [`JSONLogPrimFactory`](#--jsonlogprimfactory----jsonlogprimfactorypy-)
+  + [`LogPrimFactory`](#logprimfactory)
+  + [`JSONLogPrimFactory`](#jsonlogprimfactory)
 * [License](#license)
 * [Contribution](#contribution)
 
