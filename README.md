@@ -148,7 +148,7 @@ Remove from the base form for this log factory.
 Inherits from `LogPrimFactory` but returns stringified JSON for `logObj`
 
 ## License
-These Factories are MIT Licensed.  See [license](./LICENSE)
+pylogprim is a MIT licensed project.  See [license](./LICENSE)
 
 ## Contribution
 Contributions are welcome.  See the [contribution doc](./CONTRIBUTING.md)
