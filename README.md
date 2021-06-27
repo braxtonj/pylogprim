@@ -20,15 +20,13 @@ Check out <a href="https://github.com/hynek/structlog" target="_blank">structlog
 
 ##### Table of Contents
 * [Overview](#overview)
-* [Dependencies: None](#dependencies-none)
 * [Example Usage](#example-usage)
+* [Dependencies: None](#dependencies-none)
 * [API](#api)
   + [`LogPrimFactory`](#logprimfactory)
   + [`JSONLogPrimFactory`](#jsonlogprimfactory)
 * [License](#license)
 * [Contribution](#contribution)
-
-## Dependencies: None
 
 ## Example Usage
 1. Copy the repo to your project using the folder pylogprim
@@ -83,6 +81,8 @@ and another to `logger.debug` of the form
     }
 }
 ```
+
+## Dependencies: None
 
 ## API
 
