@@ -1,5 +1,16 @@
 # [Python Log Primitive Factory](https://github.com/braxtonj/pylogprim)
 
+##### Table of Contents
+* [Overview](#overview)
+* [Dependencies: None](#dependencies--none)
+* [Example Usage](#example-usage)
+* [API](#api)
+  + [`LogPrimFactory`](#--logprimfactory----logprimfactorypy-)
+  + [`JSONLogPrimFactory`](#--jsonlogprimfactory----jsonlogprimfactorypy-)
+* [License](#license)
+* [Contribution](#contribution)
+
+
 ## Overview
 
 WIP
