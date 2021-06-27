@@ -40,6 +40,8 @@ logger.info(
     )
 )
 
+_jlf.setDeepcopy(False) # Set deepcopy to False
+
 logger.debug(_jlf.logObj(well = 'hello'))
 ```
 The prior code will output a log to logger.info of the form (JSON)
@@ -70,84 +72,84 @@ and a log to logger.debug of the form (JSON)
 
 ### LogPrimFactory
 
-#### LogPrimFactory( base_form={}, default_val=None, deepcopy=False )
+#### `LogPrimFactory( base_form={}, default_val=None, deepcopy=False )`
 
 Creates the log factory with a log of form base_form with default values (for *args) and whether or not to deepcopy it all (useful for odd cases)
 
 * Parameters:
-  * base_form: dict - Defines the form of the log to be generated (with values by default)
-  * default_val: val - Default when *args are used (which then define the "key")
-  * deepcopy: bool - Whether or not to use deepcopy all the time
+  * `base_form`: dict - Defines the form of the log to be generated (with values by default)
+  * `default_val`: val - Default when *args are used (which then define the "key")
+  * `deepcopy`: bool - Whether or not to use deepcopy all the time
 * Returns:
-  * logFactory: object - generate log objects with .logObj()
+  * `LogPrimFactory`: object - generate log objects with .logObj()
 
-#### LogPrimFactory.logObj( *args, \*\*kwargs )
+#### `LogPrimFactory.logObj( *args, **kwargs )`
 
-Creates the log object.  **kwargs are here to define additionals.  IE `logObj( 'key0', key1=42, key2='blah' )`
+Creates the log object.  `**kwargs` are here to define additionals.  IE `logObj( 'key0', key1=42, key2='blah' )`
 
 * Parameters:
-  * *args: strings, parameters not given in the KEY=VALUE style should be given as strings.  These will be the key names used in in the log with default_value assigned.
-  * **kwargs: keyword arguments.  Each define another aspect of your generated log.  Any key that is in base_form will be superceded by the value defined here.
+  * `*args`: strings, parameters not given in the KEY=VALUE style should be given as strings.  These will be the key names used in in the log with `default_value` assigned.
+  * `**kwargs`: keyword arguments.  Each define another aspect of your generated log.  Any key that is in `base_form` will be superceded by the value defined here.
 * Returns
-  * logObject: dict - a new log object with all your things
+  * `logObject`: dict - a new log object with all your things
 
-#### LogPrimFactory.setDefaultVal( defaul_val=None )
+#### `LogPrimFactory.setDefaultVal( defaul_val=None )`
 
 Set the default value to be used when *args is encountered
 
 * Parameters:
-  * default_val: you choose
+  * `default_val`: you choose
 * Returns
   * nada
 
-#### LogPrimFactory.setDeepcopy( deppcopy=False )
+#### `LogPrimFactory.setDeepcopy( deppcopy=False )`
 
 Switch deepcopy on or off.  Sometimes dictionaries and references can get weird in python.  This let's you avoid that if you run in to it.  Generally you can leave it at.
 
 * Parameters:
-  * deepcopy: bool - True: do the deepcopy
+  * `deepcopy`: bool - True: do the deepcopy
 * Returns
   * nada
 
-#### LogPrimFactory.setBaseForm( *args, \*\*kwargs )
+#### `LogPrimFactory.setBaseForm( *args, **kwargs )`
 
 Set the base form for this log factory.  Can sometimes be useful.
 
 * Parameters:
-  * *args: strings, parameters not given in the KEY=VALUE style should be given as strings.  These will be the key names used in base_form with default_value assigned.
+  * `*args`: strings, parameters not given in the KEY=VALUE style should be given as strings.  These will be the key names used in `base_form` with `default_value` assigned.
     * ex - `.setBaseForm('key1','key2')` --> `base_form.update({'key1': DEFAULT_VAL, 'key2': DEFAULT_VAL})`
-  * \*\*kwargs: keyword arguments - key-values to be added to the base_form
+  * `**kwargs`: keyword arguments - key-values to be added to the `base_form`
     * ex - `.setBaseForm(key1=42, key2=10)` --> `base_form.update({'key1':42, 'key2':10})`
 * Returns
   * nada
 
-#### LogPrimFactory.addBase( *args, \*\*kwargs )
+#### `LogPrimFactory.addBase( *args, **kwargs )`
 
 Add to the base form for this log factory.
 
 * Parameters:
-  * *args: strings, parameters not given in the KEY=VALUE style should be given as strings.  These will be the key names used in base_form with default_value assigned.
+  * `*args`: strings, parameters not given in the KEY=VALUE style should be given as strings.  These will be the key names used in `base_form` with `default_value` assigned.
     * ex - `.addBase('key1','key2')` --> `base_form.update({'key1': DEFAULT_VAL, 'key2': DEFAULT_VAL})`
-  * \*\*kwargs: keyword arguments - key-values to be added to the base_form
+  * `**kwargs`: keyword arguments - key-values to be added to the `base_form`
     * ex - `.addBase(key1=42, key2=10)` --> `base_form.update({'key1':42, 'key2':10})`
 * Returns
   * nada
 
-#### LogPrimFactory.removeBase( *args, \*\*kwargs )
+#### `LogPrimFactory.removeBase( *args, **kwargs )`
 
 Remove from the base form for this log factory.  Can sometimes be useful.
 
 * Parameters:
-  * *args: strings, parameters not given in the KEY=VALUE style should be given as strings.  These will be the key names removed from base_form.
+  * `*args`: strings, parameters not given in the KEY=VALUE style should be given as strings.  These will be the key names removed from `base_form`.
     * ex - `.removeBase('key1','key2')` --> `base_form.pop('key1'); base_form.pop('key2')`
-  * \*\*kwargs: keyword arguments - key-values to be removed from the base_form (VAL is really unnecessary and isn't used in the logic)
+  * `**kwargs`: keyword arguments - key-values to be removed from the `base_form` (VAL is really unnecessary and isn't used in the logic)
     * ex - `.removeBase(key1=42, key2=10)` --> `base_form.pop('key1'); base_form.pop('key2')`
 * Returns
   * nada
 
-### JSONLogPrimFactory
+### `JSONLogPrimFactory`
 
-Inherits from LogPrimFactory but returns stringified JSON for logObj
+Inherits from `LogPrimFactory` but returns stringified JSON for `logObj`
 
 ## License
 These Factories are MIT Licensed.  See [license](./LICENSE)
