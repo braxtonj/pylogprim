@@ -36,7 +36,7 @@ logger.info(
     _jlf.logObj(
           message = 'This is just a test'
         , why_not_add_more = 'it will get added to this created log only'
-        , field1 = -13 # Overwrite defaults with ease
+        , field1 = -13 # Overwrite default values for this log only
     )
 )
 
