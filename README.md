@@ -6,13 +6,13 @@ WIP
 
 Simple way to create log object primitives with set default values.
 
-Useful when you are trying to standardize your structured logs across a Python project.  Save a common base_form for reuse, don't set a default base_form OR just extend the LogPrimFactory (the base) class to be what you want :)
+Useful when you are trying to standardize your structured logs across a Python project.  Save a common `base_form` for reuse, don't set a default `base_form` OR just extend the `LogPrimFactory` (the base) class to be what you want :)
 
 ## Dependencies:
 * None
 
 ## Dev Dependencies (set environment variable DEV to just exist):
-* logdna (if environment variable LOGDNA_API_KEY is set)
+* `logdna` (if environment variable `PYLOGPRIM_DEV` and `LOGDNA_API_KEY` is set)
 
 ## Example Usage
 1. Copy the repo to your project using the folder pylogprim
