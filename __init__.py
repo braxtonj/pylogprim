@@ -1,11 +1,11 @@
+"""
+Set up developer logging using the environment variable PYLOGPRIM_DEV.  May be overkill for such a small code base but why the hell not.
+"""
 import os
 import sys
 
 _DEV = True if 'PYLOGPRRIM_DEV' in os.environ else False
 
-"""
-Setup logging for dev with logdna AND console.
-"""
 if _DEV:
     import logging
     from logdna import LogDNAHandler
@@ -16,7 +16,7 @@ if _DEV:
         logging.StreamHandler(sys.stdout)
     )
 
-    ''' logdna '''
+    ''' logdna: set via environment variable LOGDNA_API_KEY '''
     if 'LOGDNA_API_KEY' in os.environ:
         # See https://github.com/logdna/python#api
         _L.addHandler(
