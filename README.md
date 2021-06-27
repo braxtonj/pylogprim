@@ -13,7 +13,7 @@
 
 ## Overview
 
-WIP
+***WIP***
 
 Simple way to create log object primitives with set default values using a factory.
 
