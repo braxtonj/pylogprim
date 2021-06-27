@@ -4,13 +4,11 @@
 
 ***WIP***
 
-Simple way to create log object primitives with set default values using a factory.
+Simple factory classes to create log object primitives with set default values and whatever else you'd like.
 
 Useful when you are trying to standardize your structured logs across a Python project.  Save a common `base_form` for reuse, don't set a default `base_form` OR just extend the `LogPrimFactory` (the base) class to be what you want :)
 
-Then just create a new log object, telling the factory what additional information you'd like to include.
-
-i.e. with default data `'id': 42`
+i.e. with a base of `{'id': 42}`
 ```python
 logPrimFactory.logObj(log = 'it')
 ```
