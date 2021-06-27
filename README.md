@@ -1,4 +1,4 @@
-# Python Log Primitive Factory
+# [Python Log Primitive Factory](https://github.com/braxtonj/pylogprim)
 
 ## Overview
 
