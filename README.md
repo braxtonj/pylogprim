@@ -88,13 +88,15 @@ and another to `logger.debug` of the form
 
 ### [`LogPrimFactory`](./LogPrimFactory.py)
 
-#### `LogPrimFactory( base_form={}, default_val=None, deepcopy=False )`
+#### `LogPrimFactory( base_form={}, default_val=None, redaction={}, deepcopy=False )`
 
 Creates the log factory with a log of form `base_form` with default values, `default_val` to be used when encountering `*args`, and whether or not to `deepcopy` it all (useful for odd cases)
 
 * Parameters:
   * `base_form`: dict - Defines the form of the log to be generated (with given values by default)
   * `default_val`: val - Default when `*args` are used (which then define the "key")
+  * `redaction`: dict - Patterns to redact.  Can either search through values (replacing subests) or for keys (replacing the entire value when matched).
+    * ex - `{ 'some_id': {'which': 'key' OR 'val', 'replace_val': REPLACE_WITH_THIS, 're': REGEX_PATTERN} }`
   * `deepcopy`: bool - Whether or not to use deepcopy all the time
 * Returns:
   * `LogPrimFactory`: object - generate log objects with .logObj()
@@ -132,7 +134,7 @@ Switch deepcopy on or off.  Sometimes dictionaries and references can get weird 
 Set the base form for this log factory.
 
 * Parameters:
-  * `*args`: strings, parameters not given in the KEY=VALUE style should be given as strings.  These will be the key names used in `base_form` with `default_value` assigned.
+  * `*args`: strings - parameters not given in the KEY=VALUE style should be given as strings.  These will be the key names used in `base_form` with `default_value` assigned.
     * ex - `.setBaseForm('key1','key2')` ~~> `base_form = {'key1': DEFAULT_VAL, 'key2': DEFAULT_VAL}`
   * `**kwargs`: keyword arguments - key-values to be added to the `base_form`
     * ex - `.setBaseForm(key1=42, key2=10)` ~~> `base_form = {'key1':42, 'key2':10}`
@@ -144,7 +146,7 @@ Set the base form for this log factory.
 Add to the base form for this log factory.
 
 * Parameters:
-  * `*args`: strings, parameters not given in the KEY=VALUE style should be given as strings.  These will be the key names used in `base_form` with `default_value` assigned.
+  * `*args`: strings - parameters not given in the KEY=VALUE style should be given as strings.  These will be the key names used in `base_form` with `default_value` assigned.
     * ex - `.addBase('key1','key2')` ~~> `base_form.update({'key1': DEFAULT_VAL, 'key2': DEFAULT_VAL})`
   * `**kwargs`: keyword arguments - key-values to be added to the `base_form`
     * ex - `.addBase(key1=42, key2=10)` ~~> `base_form.update({'key1':42, 'key2':10})`
@@ -156,12 +158,40 @@ Add to the base form for this log factory.
 Remove from the base form for this log factory.
 
 * Parameters:
-  * `*args`: strings, parameters not given in the KEY=VALUE style should be given as strings.  These will be the key names removed from `base_form`.
+  * `*args`: strings - parameters not given in the KEY=VALUE style should be given as strings.  These will be the key names removed from `base_form`.
     * ex - `.removeBase('key1','key2')` ~~> `base_form.pop('key1'); base_form.pop('key2')`
   * `**kwargs`: keyword arguments - key-values to be removed from the `base_form` (VAL is really unnecessary and isn't used in the logic)
     * ex - `.removeBase(key1=42, key2=10)` ~~> `base_form.pop('key1'); base_form.pop('key2')`
 * Returns
   * nada
+
+#### `LogPrimFactory.setRedaction( redaction={} )`
+
+Sets the redaction patterns to use to `redaction`.  `'which': 'key'` redacts entire value.   `'which': 'val'` replaces matching patterns with defined `replace_val`, leaving the rest of the value intact.
+
+* Paremeters:
+  * `redaction`: dictionary - all the patterns you want.  Use the following form
+```python
+{
+  'some_id': {
+    'which': 'key' # or 'val'
+    , 'replace_val': WHAT_TO_REPLACE_WITH
+    , 're': REGEX_PATTERN_TO_USE
+  }
+  , ...
+}
+```
+
+#### `LogPrimFactory.redact( logObj )`
+
+Automatically called within `.logObj()` if redaction patterns have been defined.
+
+Use predefined redaction patterns to redact data from the log object.
+
+* Parameters:
+  * `logObj`: logObj - the log object to be redacted. 
+* Returns
+  * `redactedLog`: logObj - 
 
 ### [`JSONLogPrimFactory`](./JSONLogPrimFactory.py)
 
