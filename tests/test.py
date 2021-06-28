@@ -74,7 +74,7 @@ class LogPrimFactoryTest(unittest.TestCase):
             , "tst_redact_val": {
                   "which": "val"
                 , "replace_val": replace_val
-                , "re": "42"
+                , "re": "^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$"
             }
         }
         base_form = {'test':'redaction'}
@@ -85,8 +85,7 @@ class LogPrimFactoryTest(unittest.TestCase):
             , "more": {
                   "burried_do_redact": "but you won't"
             }
-            , "just_test": "check 42 things"
-            , "another_test": 42
+            , "another_test": "5488089413725543"
         }
         redacted_to = {
               "dont_redact": "something here"
@@ -94,7 +93,6 @@ class LogPrimFactoryTest(unittest.TestCase):
             , "more": {
                   "burried_do_redact": replace_val # o but you did
             }
-            , "just_test": "check {} things".format(replace_val)
             , "another_test": replace_val
 
         }
