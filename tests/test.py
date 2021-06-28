@@ -44,6 +44,63 @@ class LogPrimFactoryTest(unittest.TestCase):
         logObj = lf.logObj('key0',**tmp_ephemeral_log)
         self.assertEqual(logObj,{'key0':lf._LP['default_val'],'just':'change','twelve':42,'bit':{'of':'testing'}})
 
+    def testAddRedaction(self):
+        prior_redaction = {
+            "tst_redact_0": {
+                  "which": "key"
+                , "replace_val": "//"
+                , "re": "/"
+            }
+        }
+        lf = LogPrimFactory(base_form={'test':'redaction'}, redaction=prior_redaction)
+        new_redaction = {
+            "tst_redact_1": {
+                  "which": "val"
+                , "replace_val": "*****"
+                , "re": "/"
+            }
+        }
+        lf.addRedaction(new_redaction)
+        self.assertEqual(lf._LP['redaction'],{**prior_redaction,**new_redaction})
+
+    def testRedaction(self):
+        replace_val = "-----"
+        redactions = {
+              "tst_redact_key": {
+                  "which": "key"
+                , "replace_val": replace_val
+                , "re": "do_redact"
+            }
+            , "tst_redact_val": {
+                  "which": "val"
+                , "replace_val": replace_val
+                , "re": "42"
+            }
+        }
+        base_form = {'test':'redaction'}
+        lf = LogPrimFactory(base_form=base_form, redaction=redactions)
+        orig_log_vals = {
+              "dont_redact": "something here"
+            , "do_redact": "blah"
+            , "more": {
+                  "burried_do_redact": "but you won't"
+            }
+            , "just_test": "check 42 things"
+            , "another_test": 42
+        }
+        redacted_to = {
+              "dont_redact": "something here"
+            , "do_redact": replace_val
+            , "more": {
+                  "burried_do_redact": replace_val # o but you did
+            }
+            , "just_test": "check {} things".format(replace_val)
+            , "another_test": replace_val
+
+        }
+        logObj = lf.logObj(**orig_log_vals)
+        self.assertEqual(logObj,{**redacted_to,**base_form})
+
 
 class JSONLogPrimFactoryTest(unittest.TestCase):
     def testCreation(self):
@@ -56,7 +113,6 @@ class JSONLogPrimFactoryTest(unittest.TestCase):
         logObjTstDict = json.loads(logObjTst)
         self.assertEqual(ordered(logObjDict),ordered(logObjTstDict))
         self.assertTrue(isinstance(logObj,str))
-
 
 
 if __name__ == '__main__':

@@ -21,6 +21,10 @@ It's a simple code base, but setting the environment variable `PYLOGPRIM_DEV` to
 
 The testing framework is rudimentary at best as of right now. Please ensure to cover contributions through the use of unit tests in [tests/test.py](./tests/test.py)
 
+## [Changelog](./CHANGELOG.md)
+
+Please update the changelog appropriately.
+
 ## Code of Conduct
 
 Above all else, show respect to all you encounter.  You do that and we will be fine.
