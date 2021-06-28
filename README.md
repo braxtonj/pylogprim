@@ -4,7 +4,7 @@
 
 ***WIP***
 
-Simple factory classes to create log object primitives with set default values and whatever else you'd like.
+Simple factory classes to create log object primitives with redaction, set default values and whatever else you'd like.
 
 Useful when you are trying to standardize your structured logs across a Python project.  Save a common `base_form` for reuse, don't set a default `base_form` OR just extend the `LogPrimFactory` (the base) class to be what you want :)
 
@@ -57,6 +57,20 @@ logger.info(
 jlf.setDeepcopy(False) # Set deepcopy to False
 
 logger.debug(jlf.logObj(well = 'hello'))
+
+# Do a bit of redaction using regex
+jlf.setRedaction({
+    'redaction_val_01':{'which':'val','replace_val':'***','re':'drop it'} # redact within the value
+  , 'redaction_key_01':{'which':'key','replace_val':'---','re':'bad_key'} # redact the whole value, matching the key
+})
+
+logger.info(
+  jlf.logObj(
+      key1='hey pal'
+    , key2='i said drop it.'
+    , bad_key='farewell'
+  )
+)
 ```
 The prior code will output a stringified JSON log to `logger.info` of the form
 ```JSON
@@ -74,6 +88,19 @@ and another to `logger.debug` of the form
 ```JSON
 {
       "well": "hello"
+    , "field1": 100
+    , "key2": {
+          "well": "just"
+        , "log": "it"
+    }
+}
+```
+and lastly a redacted log to `logger.info` of the form
+```JSON
+{
+      "key1": "hey pal"
+    , "key2": "i said ***."
+    , "bad_key": "---"
     , "field1": 100
     , "key2": {
           "well": "just"
