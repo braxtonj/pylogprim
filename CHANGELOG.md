@@ -1,6 +1,6 @@
 # Changelog
 
-## 2021-06-28 - [braxtonj](https://github.com/braxtonj)
+## 2021-06-27 - [braxtonj](https://github.com/braxtonj)
 ### Changed
 * Initial implementation of data redaction using regex
 
