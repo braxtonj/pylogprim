@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 
 import copy
+import re
 
 from . import _DEV
-if _DEV: from . import _L
+if _DEV:
+    from .util.logging import _L
+    import json
 
 class LogPrimFactory:
     """
@@ -31,24 +34,35 @@ class LogPrimFactory:
         * __iter__ - Just loops the base_form
         * __str__ - returns base_form wrapped as a string
     """
-    def __init__(self, base_form={}, default_val=None, deepcopy=False):
+    def __init__(self, base_form={}, default_val=None, deepcopy=False, redaction={}):
         """
         base_form: the base form of the log.  This is essentially the
                    structure that will be your log.  Overwrite at creation
                    or use the default val you provide.
         default_val: Value to place for a parameter if defined via *args
         deepcopy: Whether or not to "deepcopy" things.
+        redaction: Dictionary of redaction patterns to employ of the form
+                                { 'key': { # key is arbitrary but must be unique
+                                        'which': 'key' OR 'val'
+                                      , 'replace_val':'value to use as the replacement'
+                                      , 're':'regex pattern'
+                                  }
+                                  , ...
+                                }
         """
         self._LP = {
               'base_form': {}
             , 'default_val': default_val
             , 'deepcopy': deepcopy
+            , 'redaction': {}
         }
         if isinstance(base_form,set) or isinstance(base_form,frozenset):
             for k in base_form:
                 self._LP['base_form'][k] = self._LP['default_val']
         else:
             self.setBaseForm(**base_form) # Safer just in case.  Honors deepcopy
+
+        self.setRedaction( redaction )
 
     ''' CREATION '''
     def logObj(self, *args, **kwargs):
@@ -71,22 +85,26 @@ class LogPrimFactory:
         new_log = {}
         if self._LP['deepcopy']:
             new_log = copy.deepcopy(self._LP['base_form'])
-            if _DEV: _L.debug('deep-copied base_form to new_log')
+            if _DEV: _L.debug('{"message":"deep-copied base_form to new_log"}')
             for a in args:
                 new_log.update( {str(a): copy.deepcopy(self._LP['default_val'])} )
-                if _DEV: _L.debug('copied {}: {}'.format(a, self._LP['default_val']))
+                if _DEV: _L.debug('{{"deep-copied": {{"{ARG}": "{VAL}"}}}}'.format(ARG=a, VAL=self._LP['default_val']))
             for k, v in kwargs.items():
                 new_log[k] = copy.deepcopy(v)
-                if _DEV: _L.debug('deep-copied {}: {}'.format(k, v))
+                if _DEV: _L.debug('{{"deep-copied": {{"{KEY}": "{VAL}"}}}}'.format(KEY=k, VAL=v))
         else:
             new_log = self._LP['base_form']
-            if _DEV: _L.debug('copied base_form to new_log')
+            if _DEV: _L.debug('{"message":"copied base_form to new_log"}')
             for a in args:
                 new_log.update( {a: self._LP['default_val']} )
-                if _DEV: _L.debug('copied {}: {}'.format(a, self._LP['default_val']))
+                if _DEV: _L.debug('{{"copied": {{"{ARG}": "{VAL}"}}}}'.format(ARG=a, VAL=self._LP['default_val']))
             for k, v in kwargs.items():
                 new_log[k] = v
-                if _DEV: _L.debug('copied {}: {}'.format(k, v))
+                if _DEV: _L.debug('{{"copied": {{"{KEY}": "{VAL}"}}}}'.format(KEY=k, VAL=v))
+
+        if self._LP['redaction']:
+            new_log = self.redact(new_log)
+
         return new_log
 
 
@@ -110,15 +128,15 @@ class LogPrimFactory:
         Value to be used by all attributes defined via *args route (ie, with just a name str)
         """
         self._LP['default_val'] = default_val
-        if _DEV: _L.debug('set default_value to {}'.format(default_val))
+        if _DEV: _L.debug('{{"message":"set default_val", "default_val":"{}"}}'.format(default_val))
 
     def setDeepcopy(self, deepcopy=False):
         self._LP['deepcopy'] = deepcopy
-        if _DEV: _L.debug('set deepcopy to {}'.format(str(deepcopy)))
+        if _DEV: _L.debug('{{"message":"set deepcopy","deepcopy": "{}"}}'.format(str(deepcopy)))
 
     def setBaseForm(self, *args, **kwargs):
         self._LP['base_form'] = {}
-        if _DEV: _L.debug('reset base_form')
+        if _DEV: _L.debug('{"message":"reset base_form"}')
         self.addBase(*args, **kwargs) # Honors deepcopy
 
     def addBase(self, *args, **kwargs):
@@ -131,17 +149,17 @@ class LogPrimFactory:
         if self._LP['deepcopy']:
             for a in args:
                 self._LP['base_form'].update( {str(a): copy.deepcopy(self._LP['default_val'])} )
-                if _DEV: _L.debug('added: {}: {}'.format(a,self._LP['default_val']))
+                if _DEV: _L.debug('{{"added_base_form": {{"{}": "{}"}}}}'.format(a,self._LP['default_val']))
             for k, v in kwargs.items():
                 self._LP['base_form'].update( {k: copy.deepcopy(v)} )
-                if _DEV: _L.debug('added: {}: {}'.format(k, v))
+                if _DEV: _L.debug('{{"added_base_form": {{"{}": "{}"}}}}'.format(k, v))
         else:
             for a in args:
                 self._LP['base_form'].update( {str(a): self._LP['default_val']} )
-                if _DEV: _L.debug('added: {}: {}'.format(a,self._LP['default_val']))
+                if _DEV: _L.debug('{{"added_base_form": {{"{}": "{}"}}}}'.format(a,self._LP['default_val']))
             for k, v in kwargs.items():
                 self._LP['base_form'].update( {k: v} )
-                if _DEV: _L.debug('added: {}: {}'.format(k, v))
+                if _DEV: _L.debug('{{"added_base_form": {{"{}": "{}"}}}}'.format(k, v))
 
     def removeBase(self, *args, **kwargs):
         """
@@ -152,7 +170,100 @@ class LogPrimFactory:
         """
         for a in args:
             self._LP['base_form'].pop(str(a), None)
-            if _DEV: _L.debug('removed: {}'.format(a))
+            if _DEV: _L.debug('{{"removed_base_form": "{}"}}'.format(a))
         for k in kwargs:
             self._LP['base_form'].pop(k, None)
-            if _DEV: _L.debug('removed: {}'.format(k))
+            if _DEV: _L.debug('{{"removed_base_form": "{}"}}'.format(k))
+
+    def setRedaction(self, redaction={}):
+        """
+        Sets the redaction patterns to use
+        """
+        self._LP['redaction'] = {}
+
+        self.addRedaction(redaction)
+
+    def addRedaction(self, redaction={}):
+        """
+        Adds redaction patterns to use.
+
+        Key "which" overwrites val when a key is matched.
+        Val "which" replaces matched patterns in values with the v
+
+        Assumes redaciton is of the form
+            { 'key': { # key is arbitrary but must be unique
+                      'which': 'key' OR 'val'
+                    , 'replace_val': 'value to use as the replacement'
+                    , 're': 'regex pattern'
+                }
+                , ...
+            }
+        """
+        for k, v in redaction.items():
+            new_redact = {
+                k: {
+                      'which': v['which']
+                    , 'replace_val': v['replace_val']
+                    , 're': v['re']
+                }
+            }
+            self._LP['redaction'].update(new_redact)
+
+            if _DEV: _L.debug('''{{"added_redaction":{NEW_REDACT}}}'''.format(NEW_REDACT=json.dumps(new_redact)))
+
+    def redactMatchingKey(self, logObj, regex, replace_val):
+        """
+        Only handles dictionary objects
+        """
+        redacted_log = {}
+
+        for k, v in logObj.items():
+            if re.search(regex,k): # Found a match
+                if _DEV: _L.debug('{{"redaction_match_key":"{}"}}'.format(k))
+                new_v = replace_val
+            elif type(v) is dict:
+                new_v = self.redactMatchingKey(logObj=v, regex=regex, replace_val=replace_val)
+            else:
+                new_v = v if not self._LP['deepcopy'] else copy.deepcopy(v)
+            redacted_log.update({k:new_v})
+        return redacted_log
+
+    def redactMatchingVal(self, logObj, regex, replace_val):
+        """
+        Only handles dictionary objects
+        """
+        redacted_log = {}
+
+        for k, v in logObj.items():
+            if type(v) is dict:
+                new_v = self.redactMatchingVal(logObj=v, regex=regex, replace_val=replace_val)
+            else:
+                try:
+                    if re.search(regex,str(v)):
+                        new_v = re.sub(regex,replace_val,str(v))
+                        if _DEV and new_v != v: _L.debug('{{"redaction_match_val":"{}"}}'.format(k))
+                    else:
+                        new_v = v if not self._LP['deepcopy'] else copy.deepcopy(v)
+                except:
+                    new_v = v if not self._LP['deepcopy'] else copy.deepcopy(v)
+            redacted_log.update({k:new_v})
+
+        return redacted_log
+
+    def redact(self, logObj):
+        """
+        Takes in a log object and returns a redacted version using patterns defined
+
+        This works by matching ANY (even sub keys) using the defined regex pattern.  If a match is found, redact it
+        """
+        redacted_log = logObj if not self._LP['deepcopy'] else copy.deepcopy(logObj)
+
+        for k, v in self._LP['redaction'].items():
+            if v['which'] == 'key':
+                redacted_log = self.redactMatchingKey(logObj=redacted_log, regex=v['re'], replace_val=v['replace_val'])
+            elif v['which'] == 'val':
+                redacted_log = self.redactMatchingVal(logObj=redacted_log, regex=v['re'], replace_val=v['replace_val'])
+            else:
+                if _DEV: _L.warning('{"message":"bad redaction type passed","redaction_type_given":"{}"}}'.format(v['which']))
+
+        return redacted_log
