@@ -166,7 +166,7 @@ Remove from the base form for this log factory.
 
 #### `LogPrimFactory.setRedaction( redaction={} )`
 
-Sets the redaction patterns to use to `redaction`.  `'which': 'key'` redacts entire value.   `'which': 'val'` replaces matching patterns with defined `replace_val`, leaving the rest of the value intact.
+Sets the redaction patterns to use to `redaction`.  `'which': 'key'` redacts entire value when a key is matched.   `'which': 'val'` replaces matching patterns within vals with `replace_val`, leaving the rest of the val intact.
 
 * Paremeters:
   * `redaction`: dictionary - all the patterns you want.  Use the following form
