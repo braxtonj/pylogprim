@@ -264,6 +264,6 @@ class LogPrimFactory:
             elif v['which'] == 'val':
                 redacted_log = self.redactMatchingVal(logObj=redacted_log, regex=v['re'], replace_val=v['replace_val'])
             else:
-                if _DEV: _L.warning('{"message":"bad redaction type passed","redaction_type_give":"{}"}}'.format(v['which']))
+                if _DEV: _L.warning('{"message":"bad redaction type passed","redaction_type_given":"{}"}}'.format(v['which']))
 
         return redacted_log
