@@ -62,7 +62,11 @@ logger.debug(jlf.logObj(well = 'hello'))
 jlf.setRedaction({
     'redaction_val_01':{'which':'val','replace_val':'***','re':'drop it'} # redact within the value
   , 'redaction_key_01':{'which':'key','replace_val':'---','re':'bad_key'} # redact the whole value, matching the key
-  , 'redaction_val_cc':{'which':'val','replace_val':'################','re':'^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$'} # basic cc redaction. https://stackoverflow.com/a/9315696
+  , 'redaction_val_cc':{
+        'which':'val'
+      , 'replace_val':'################'
+      , 're':'^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$' # basic cc redaction. https://stackoverflow.com/a/9315696
+  }
 })
 
 logger.info(
