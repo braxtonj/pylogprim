@@ -95,8 +95,7 @@ Creates the log factory with a log of form `base_form` with default values, `def
 * Parameters:
   * `base_form`: dict - Defines the form of the log to be generated (with given values by default)
   * `default_val`: val - Default when `*args` are used (which then define the "key")
-  * `redaction`: dict - Patterns to redact.  Can either search through values (replacing subests) or for keys (replacing the entire value when matched).
-    * ex - `{ 'some_id': {'which': 'key' OR 'val', 'replace_val': REPLACE_WITH_THIS, 're': REGEX_PATTERN} }`
+  * `redaction`: dict - Patterns to redact.  See [`LogPrimFactory.setRedaction( redaction={} )`](#logprimfactorysetredaction-redaction-) for more details.
   * `deepcopy`: bool - Whether or not to use deepcopy all the time
 * Returns:
   * `LogPrimFactory`: object - generate log objects with .logObj()
