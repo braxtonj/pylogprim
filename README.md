@@ -214,7 +214,7 @@ Sets the redaction patterns to use to `redaction`.  `'which': 'key'` redacts ent
 ```python
 {
   'some_id': {
-    'which': 'key' # or 'val'
+      'which': 'key' # or 'val'
     , 'replace_val': WHAT_TO_REPLACE_WITH
     , 're': REGEX_PATTERN_TO_USE
   }
