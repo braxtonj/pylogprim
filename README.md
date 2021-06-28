@@ -16,7 +16,7 @@ outputs
 ```python
 { 'id': 42, 'log': 'it' }
 ```
-Check out <a href="https://github.com/hynek/structlog" target="_blank">structlog</a> if you want more than just a log primitive factory.
+Check out <a href="https://github.com/hynek/structlog" target="_blank">structlog</a> if you want more (sans redaction) than just a log primitive factory.
 
 ##### Table of Contents
 * [Overview](#overview)
