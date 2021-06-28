@@ -1,5 +1,4 @@
 import logging
-from logdna import LogDNAHandler
 import os
 import sys
 
@@ -16,6 +15,7 @@ if _DEV:
     _L = logging.getLogger('PYLOGPRIM_DEV')
 
     if 'LOGDNA_API_KEY' in os.environ:
+        from logdna import LogDNAHandler
         _L.addHandler(
             LogDNAHandler(
                 key = os.environ['LOGDNA_API_KEY']
