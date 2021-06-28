@@ -241,7 +241,7 @@ class LogPrimFactory:
                 try:
                     if re.search(regex,str(v)):
                         new_v = re.sub(regex,replace_val,str(v))
-                        if new_v != v and _DEV: _L.debug('{{"redaction_match_val":"{}"}}'.format(k))
+                        if _DEV and new_v != v: _L.debug('{{"redaction_match_val":"{}"}}'.format(k))
                     else:
                         new_v = v if not self._LP['deepcopy'] else copy.deepcopy(v)
                 except:
