@@ -25,6 +25,7 @@ Check out <a href="https://github.com/hynek/structlog" target="_blank">structlog
 * [API](#api)
   + [`LogPrimFactory`](#logprimfactory)
   + [`JSONLogPrimFactory`](#jsonlogprimfactory)
+  + [`SimpleJSONLogPrimFactory`](#simplejsonlogprimfactory)
 * [License](#license)
 * [Contribution](#contribution)
 
@@ -236,6 +237,10 @@ Use predefined redaction patterns to redact data from the log object.
 ### [`JSONLogPrimFactory`](./JSONLogPrimFactory.py)
 
 Inherits from `LogPrimFactory` but returns stringified JSON for `logObj`
+
+### [`SimpleJSONLogPrimFactory`](./SimpleJSONLogPrimFactory.py)
+
+Inherits from `LogPrimFactory` but returns stringified JSON for `logObj` via SimpleJSON (external dependency but more robust stringification)
 
 ## License
 pylogprim is a MIT licensed project.  See [license](./LICENSE)
