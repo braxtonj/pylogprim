@@ -3,3 +3,5 @@
 from .LogPrimFactory import LogPrimFactory
 
 from .JSONLogPrimFactory import JSONLogPrimFactory
+
+from .SimpleJSONLogPrimFactory import SimpleJSONLogPrimFactory
