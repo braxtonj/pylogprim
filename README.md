@@ -124,7 +124,13 @@ and lastly a redacted log to `logger.info` of the form
 ```
 
 ## Dependencies: None
-Okay that's a white lie.  If you use SimpleJSON Factory (recommended) install simplejson via `pip install -r requirements.txt`
+Okay, that's a white lie.
+
+If you use SimpleJSON Factory (recommended) install simplejson via
+`pip install -r requirements.txt`
+
+Also, if you use the LogDNA logger for dev, you will need to install logdna via
+`pip install logdna`
 
 ## API
 
