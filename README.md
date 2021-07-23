@@ -123,7 +123,7 @@ and lastly a redacted log to `logger.info` of the form
 ```
 
 ## Dependencies: None
-Okay that's a white lie.  The standard Python library is used.
+Okay that's a white lie.  If you use SimpleJSON Factory (recommended) install simplejson via `pip install -r requirements.txt`
 
 ## API
 
