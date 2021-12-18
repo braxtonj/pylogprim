@@ -32,7 +32,7 @@ class LogPrimFactory:
         * setBaseForm - set the default values for the log object
         * addBase - add things to the base_form
         * removeBase - remove from the base_form
-        * sendCheck
+        * sendCheck - check if the log should be sent via a sampling function
         * __iter__ - Just loops the base_form
         * __str__ - returns base_form wrapped as a string
     """
