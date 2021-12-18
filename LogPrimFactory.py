@@ -3,6 +3,7 @@
 import copy
 import re
 
+from .SamplingClasses import Sampling
 from . import _DEV
 if _DEV:
     from .util.logging import _L
@@ -31,10 +32,11 @@ class LogPrimFactory:
         * setBaseForm - set the default values for the log object
         * addBase - add things to the base_form
         * removeBase - remove from the base_form
+        * sendCheck
         * __iter__ - Just loops the base_form
         * __str__ - returns base_form wrapped as a string
     """
-    def __init__(self, base_form={}, default_val=None, deepcopy=False, redaction={}):
+    def __init__(self, base_form={}, default_val=None, deepcopy=False, redaction={}, sampling_instance=Sampling()):
         """
         base_form: the base form of the log.  This is essentially the
                    structure that will be your log.  Overwrite at creation
@@ -49,6 +51,7 @@ class LogPrimFactory:
                                   }
                                   , ...
                                 }
+        sampling_instance: # Sampling class instance.  Defaults to send everything via base class
         """
         self._LP = {
               'base_form': {}
@@ -63,6 +66,7 @@ class LogPrimFactory:
             self.setBaseForm(**base_form) # Safer just in case.  Honors deepcopy
 
         self.setRedaction( redaction )
+        self.sampling_instance = sampling_instance
 
     ''' CREATION '''
     def logObj(self, *args, **kwargs):
@@ -267,3 +271,13 @@ class LogPrimFactory:
                 if _DEV: _L.warning('{"message":"bad redaction type passed","redaction_type_given":"{}"}}'.format(v['which']))
 
         return redacted_log
+
+
+    ''' SAMPLING '''
+    def sendCheck(self):
+        """
+        Decide if a log should be sent using a random selection over some distribution defined in the sampling class
+
+        Basically, if this returns true the log should be sent.  If not, forget about it.
+        """
+        return self.sampling_instance.sendCheck()
